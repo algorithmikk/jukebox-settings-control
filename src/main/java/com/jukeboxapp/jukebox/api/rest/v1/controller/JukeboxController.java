@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jukeboxapp.jukebox.api.rest.v1.ressource.JukeBox;
-import com.jukeboxapp.jukebox.api.rest.v1.ressource.Settings;
-import com.jukeboxapp.jukebox.domain.mapper.JukeBoxMapper;
 import com.jukeboxapp.jukebox.domain.service.JukeBoxeService;
 
 import io.swagger.annotations.ApiOperation;
@@ -33,13 +31,13 @@ public class JukeboxController {
 			@ApiResponse(code = 400, message = "Bad request"),
 			@ApiResponse(code = 404, message = "The Setting for that jukebox has not been found") })
 	@GetMapping(value = "/jukebox/{model}/setting/{id}", produces = { "application/json" })
-	public ResponseEntity<Settings> getSettingJukeBox(
+	public ResponseEntity<List<JukeBox>> getSettingJukeBox(
 			@PathVariable(value = "id") @ApiParam(value = "The ID of the Setting", required = true) final String id,
 			@PathVariable(value = "model") @ApiParam(value = "The model of the Jukebox", required = false) final String model,
 			@RequestParam(value = "offset") @ApiParam(value = "Offset for paginated results", required = false) final int offset,
 			@RequestParam(value = "limit") @ApiParam(value = "Limit for paginated results", required = false) final int limit) {
 
-		return ResponseEntity.ok().body(service.getSettings());
+		return ResponseEntity.ok().body(service.getListComponentsFromJukeGivenSettingId(id));
 	}
 
 }

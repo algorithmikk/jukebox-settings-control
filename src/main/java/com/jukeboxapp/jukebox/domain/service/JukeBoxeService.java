@@ -8,7 +8,9 @@ import com.jukeboxapp.jukebox.api.rest.v1.ressource.Settings;
 public interface JukeBoxeService {
 
 	public List<JukeBox> getJukeBox();
-	
-	public Settings getSettings();
+
+	public Settings getAllSettings();
+
+	public List<JukeBox> getListComponentsFromJukeGivenSettingId(String settingId);
 
 }
