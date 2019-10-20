@@ -1,0 +1,42 @@
+swagger: '2.0'
+info:
+  description: This is a REST Api for retrieving setting information from a JukeBox
+  version: 1.0.0
+  title: Jukebox App
+basePath: /
+tags:
+- name: jukebox-controller
+  description: Setting controller to retrieve from jukebox
+paths:
+  /api/jukeboxapp/v1:
+    get:
+      tags:
+      - jukebox-controller
+      summary: Retrieve settings of a JukeBox based on the input parameters
+      operationId: getSettingJukeBox
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: query
+        description: The ID of the jukebox setting
+        required: true
+        type: string
+      - name: model
+        description: The model of the jukebox
+        in: query
+        required: false
+        type: string
+      - name: limit
+        in: query
+        description: limit
+        required: false
+        type: integer
+      - name: offset
+        description: offset
+        in: query
+        required: false
+        type: integer
+      responses:
+        200:
+          description: Execution succeeded

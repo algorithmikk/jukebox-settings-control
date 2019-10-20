@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: 'jukebox-v1'
+  main:
+    allow-bean-definition-overriding: true
+  messages:
+    encoding: UTF-8
+    cache-duration: -1
+    fallback-to-system-locale: false
+    use-code-as-default-message: true    
+
+service:
+  version: v1
+  version-swagger: 2.0
+  
+  
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
+        loggerLevel: basic
