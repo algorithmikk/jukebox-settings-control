@@ -57,3 +57,4 @@ out/
 .metadata/.plugins/org.eclipse.ui.workbench/dialog_settings.xml
 .metadata/.plugins/org.eclipse.ui.workbench/workingsets.xml
 .metadata/version.ini
+bin/main/com/jukeboxapp/jukebox/domain/mapper/JukeBoxMapperImpl.class
