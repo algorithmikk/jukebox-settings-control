@@ -1,11 +1,11 @@
 /bin
+.generatedsources/
 HELP.md
 .gradle
 build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**
 !**/src/test/**
-/.generatedsources
 
 ### STS ###
 .apt_generated
