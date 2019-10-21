@@ -26,17 +26,18 @@ public class JukeboxController {
 	@Autowired
 	private JukeBoxeService service;
 
-	@ApiOperation(value = "Return a setting for a jukebox", nickname = "getSettingJukeBox")
+	@ApiOperation(value = "Return a list of paginated Jukes with a supported setting Id", nickname = "getSettingJukeBox")
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "The execution has been successfull", response = JukeBox.class),
 			@ApiResponse(code = 400, message = "Bad request"),
-			@ApiResponse(code = 404, message = "The Setting for that jukebox has not been found") })
+			@ApiResponse(code = 404, message = "The Setting for that jukebox has not been found"),
+			@ApiResponse(code = 404, message = "Internal server error") })
 	@GetMapping(value = { "/jukebox/setting/{id}", "/jukebox/{model}/setting/{id}" }, produces = { "application/json" })
 	public ResponseEntity<List<JukeBox>> getSettingJukeBox(
 			@PathVariable(value = "id") @ApiParam(value = "The ID of the Setting", required = true) final String id,
 			@PathVariable(value = "model") @ApiParam(value = "The model of the Jukebox", required = false) final Optional<String> model,
-			@RequestParam(value = "offset") @ApiParam(value = "Offset for paginated results", required = false) final int offset,
-			@RequestParam(value = "limit") @ApiParam(value = "Limit for paginated results", required = false) final int limit) {
+			@RequestParam(value = "offset") @ApiParam(value = "Offset for paginated results", required = false) final Optional<Integer> offset,
+			@RequestParam(value = "limit") @ApiParam(value = "Limit for paginated results", required = false) final Optional<Integer> limit) {
 
 		return ResponseEntity.ok().body(service.getPaginatedListWithSettingIdandModel(id, model, offset, limit));
 
