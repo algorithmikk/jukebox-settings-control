@@ -5,6 +5,7 @@ build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**
 !**/src/test/**
+/.generatedsources
 
 ### STS ###
 .apt_generated
@@ -32,8 +33,6 @@ out/
 ### VS Code ###
 .vscode/
 .DS_Store
-.generatedsources/com/jukeboxapp/jukebox/domain/mapper/JukeBoxMapperImpl.java
-.generatedsources/src/main/java/com/jukeboxapp/jukebox/domain/mapper/JukeBoxMapperImpl.java
 .gitattributes
 .metadata/.lock
 .metadata/.log
