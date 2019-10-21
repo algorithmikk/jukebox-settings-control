@@ -37,7 +37,7 @@ public class JukeboxController {
 			@RequestParam(value = "offset") @ApiParam(value = "Offset for paginated results", required = false) final int offset,
 			@RequestParam(value = "limit") @ApiParam(value = "Limit for paginated results", required = false) final int limit) {
 
-		return ResponseEntity.ok().body(service.getListComponentsFromJukeGivenSettingId(id));
+		return ResponseEntity.ok().body(service.getPaginatedListWithSettingIdandModel(id, model, offset, limit));
 	}
 
 }

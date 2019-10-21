@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -101,23 +102,12 @@ public class JukeBoxServiceImpl implements JukeBoxeService {
 		return requires;
 	}
 
-	private boolean containsAllRequiredComponent(String settingId) {
-		// Note that setting is considered to be supported if jukebox has all required
-		// components.
+	@Override
+	public List<JukeBox> getPaginatedListWithSettingIdandModel(String settingId, String model, int offset, int limit) {
 
-		// Check if list of Components of JukeBox bean contains all the required
-		// components of list of settings of requires
-
-		// if the current jukebox i iterate on is having the required component i return
-		// this jukebox
-
-		// return mySetOfComp.containsAll(mySetOfRequires);
-
-		return false;
-	}
-
-	private boolean settingSupported() {
-		return false;
+		return !StringUtils.isBlank(model) ? getListComponentsFromJukeGivenSettingId(settingId).stream()
+				.filter(j -> j.getModel().equals(model)).collect(Collectors.toList())
+				: getListComponentsFromJukeGivenSettingId(settingId);
 	}
 
 }
