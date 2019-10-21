@@ -9,6 +9,8 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.support.PagedListHolder;
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.jukeboxapp.jukebox.api.rest.v1.ressource.Components;
@@ -107,9 +109,28 @@ public class JukeBoxServiceImpl implements JukeBoxeService {
 	public List<JukeBox> getPaginatedListWithSettingIdandModel(String settingId, Optional<String> model, int offset,
 			int limit) {
 
-		return model.isPresent() ? getListComponentsFromJukeGivenSettingId(settingId).stream()
-				.filter(j -> j.getModel().equals(model)).collect(Collectors.toList())
-				: getListComponentsFromJukeGivenSettingId(settingId);
+		PagedListHolder<JukeBox> page = new PagedListHolder<>();
+
+		if (model.isPresent()) {
+
+			page = new PagedListHolder<JukeBox>(getListComponentsFromJukeGivenSettingId(settingId).stream()
+					.filter(j -> j.getModel().equals(model.get())).collect(Collectors.toList()));
+
+		} else {
+
+			page = new PagedListHolder<JukeBox>(getListComponentsFromJukeGivenSettingId(settingId));
+		}
+
+		page.setPageSize(limit); // number of items per page
+		page.setPage(offset);
+
+		return page.getPageList();
+
+		/*
+		 * return model.isPresent() ? page.getPageList().stream().filter(j ->
+		 * j.getModel().equals(model)).collect(Collectors.toList()) :
+		 * getListComponentsFromJukeGivenSettingId(settingId);
+		 */
 
 	}
 

@@ -60,3 +60,4 @@ out/
 bin/main/com/jukeboxapp/jukebox/domain/mapper/JukeBoxMapperImpl.class
 *.class
 *.class
+*.class
