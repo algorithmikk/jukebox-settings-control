@@ -32,7 +32,7 @@ public class JukeBoxServiceImpl implements JukeBoxeService {
 	private JukeBoxMapper mapper;
 
 	@Override
-	public List<JukeBox> getJukeBox() {
+	public List<JukeBox> getListOfJukes() {
 		// TODO Auto-generated method stub
 
 		List<JukeBox> listJukes = new ArrayList<>();
@@ -53,7 +53,7 @@ public class JukeBoxServiceImpl implements JukeBoxeService {
 	}
 
 	@Override
-	public List<JukeBox> getListComponentsFromJukeGivenSettingId(String settingId) {
+	public List<JukeBox> getListComponentsFromJukesGivenSettingId(String settingId) {
 
 		return filterListToSet(settingId);
 	}
@@ -64,17 +64,13 @@ public class JukeBoxServiceImpl implements JukeBoxeService {
 		Set<String> setOfUniqueComponents = new TreeSet<>();
 		Set<String> setOfUniqueSettings = new TreeSet<>();
 
-		for (JukeBox juke : getJukeBox()) {
+		for (JukeBox juke : getListOfJukes()) {
 
 			List<String> mylist = juke.getComponents().stream().map(Components::getName).collect(Collectors.toList());
 
 			setOfUniqueComponents = mylist.stream().collect(Collectors.toSet());
 
 			setOfUniqueSettings = getListOfRequiresFromSettingId(settingId).stream().collect(Collectors.toSet());
-
-			// If List A = {A, B, C, A, A} --> Set of A = {A,B,C}
-			// IF List B = {A,B,C,C} -- Set of B = {A,B,C}
-			// ListA.containsALL(LISTB) ? --> true
 
 			if (CollectionUtils.containsAll(setOfUniqueComponents, setOfUniqueSettings)) {
 				jukeBoxList.add(juke);
@@ -101,31 +97,31 @@ public class JukeBoxServiceImpl implements JukeBoxeService {
 	}
 
 	@Override
-	public List<JukeBox> getPaginatedListWithSettingIdandModel(String settingId, Optional<String> model, int offset,
-			int limit) {
+	public List<JukeBox> getPaginatedListWithSettingIdandModel(String settingId, Optional<String> model,
+			Optional<Integer> offset, Optional<Integer> limit) {
 
-		PagedListHolder<JukeBox> page = createPaginatedListOfJukeBox(settingId, model, offset, limit);
+		PagedListHolder<JukeBox> page = createPaginatedListOfJukes(settingId, model, offset, limit);
 
 		return page.getPageList();
 
 	}
 
-	private PagedListHolder<JukeBox> createPaginatedListOfJukeBox(String settingId, Optional<String> model, int offset,
-			int limit) {
+	private PagedListHolder<JukeBox> createPaginatedListOfJukes(String settingId, Optional<String> model,
+			Optional<Integer> offset, Optional<Integer> limit) {
 		PagedListHolder<JukeBox> page = new PagedListHolder<>();
 
 		if (model.isPresent()) {
 
-			page = new PagedListHolder<JukeBox>(getListComponentsFromJukeGivenSettingId(settingId).stream()
+			page = new PagedListHolder<JukeBox>(getListComponentsFromJukesGivenSettingId(settingId).stream()
 					.filter(j -> j.getModel().equals(model.get())).collect(Collectors.toList()));
 
 		} else {
 
-			page = new PagedListHolder<JukeBox>(getListComponentsFromJukeGivenSettingId(settingId));
+			page = new PagedListHolder<JukeBox>(getListComponentsFromJukesGivenSettingId(settingId));
 		}
 
-		page.setPageSize(limit); // number of items per page
-		page.setPage(offset);
+		page.setPageSize(limit.get()); // number of items per page
+		page.setPage(offset.get());
 		return page;
 	}
 

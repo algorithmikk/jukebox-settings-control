@@ -8,13 +8,13 @@ import com.jukeboxapp.jukebox.api.rest.v1.ressource.Settings;
 
 public interface JukeBoxeService {
 
-	public List<JukeBox> getJukeBox();
+	public List<JukeBox> getListOfJukes();
 
 	public Settings getAllSettings();
 
-	public List<JukeBox> getListComponentsFromJukeGivenSettingId(String settingId);
+	public List<JukeBox> getListComponentsFromJukesGivenSettingId(String settingId);
 
-	public List<JukeBox> getPaginatedListWithSettingIdandModel(String settingId, Optional<String> model, int offset,
-			int limit);
+	public List<JukeBox> getPaginatedListWithSettingIdandModel(String settingId, Optional<String> model,
+			Optional<Integer> offset, Optional<Integer> limit);
 
 }
