@@ -14,6 +14,7 @@ public interface JukeBoxeService {
 
 	public List<JukeBox> getListComponentsFromJukeGivenSettingId(String settingId);
 
-	public List<JukeBox> getPaginatedListWithSettingIdandModel(String settingId, Optional<String> model, int offset, int limit);
+	public List<JukeBox> getPaginatedListWithSettingIdandModel(String settingId, Optional<String> model, int offset,
+			int limit);
 
 }
