@@ -37,9 +37,7 @@ public class JukeBoxServiceImpl implements JukeBoxeService {
 
 		List<JukeBox> listJukes = new ArrayList<>();
 
-		List<JukeBoxDto> listDto = client.getListOfJukes();
-
-		for (JukeBoxDto dto : listDto) {
+		for (JukeBoxDto dto : client.getListOfJukes()) {
 
 			listJukes.add(mapper.dtoToJukeBox(dto));
 
@@ -51,22 +49,18 @@ public class JukeBoxServiceImpl implements JukeBoxeService {
 	@Override
 	public Settings getAllSettings() {
 
-		SettingsDto obj = client.getSettings();
-
-		return mapper.settingsDtoToSettings(obj);
+		return mapper.settingsDtoToSettings(client.getSettings());
 	}
 
 	@Override
 	public List<JukeBox> getListComponentsFromJukeGivenSettingId(String settingId) {
 
-		List<JukeBox> jukeBoxList = new ArrayList<>();
-
-		filterListToSet(settingId, jukeBoxList);
-
-		return jukeBoxList;
+		return filterListToSet(settingId);
 	}
 
-	private void filterListToSet(String settingId, List<JukeBox> jukeBoxList) {
+	private List<JukeBox> filterListToSet(String settingId) {
+
+		List<JukeBox> jukeBoxList = new ArrayList<>();
 		Set<String> setOfUniqueComponents = new TreeSet<>();
 		Set<String> setOfUniqueSettings = new TreeSet<>();
 
@@ -87,6 +81,7 @@ public class JukeBoxServiceImpl implements JukeBoxeService {
 			}
 
 		}
+		return jukeBoxList;
 	}
 
 	private List<String> getListOfRequiresFromSettingId(String settingId) {

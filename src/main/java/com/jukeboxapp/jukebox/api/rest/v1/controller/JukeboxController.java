@@ -35,8 +35,8 @@ public class JukeboxController {
 	public ResponseEntity<List<JukeBox>> getSettingJukeBox(
 			@PathVariable(value = "id") @ApiParam(value = "The ID of the Setting", required = true) final String id,
 			@PathVariable(value = "model") @ApiParam(value = "The model of the Jukebox", required = false) final Optional<String> model,
-			@RequestParam(value = "offset", defaultValue = "0") @ApiParam(value = "Offset for paginated results", required = false) final int offset,
-			@RequestParam(value = "limit", defaultValue = "10") @ApiParam(value = "Limit for paginated results", required = false) final int limit) {
+			@RequestParam(value = "offset") @ApiParam(value = "Offset for paginated results", required = false) final int offset,
+			@RequestParam(value = "limit") @ApiParam(value = "Limit for paginated results", required = false) final int limit) {
 
 		return ResponseEntity.ok().body(service.getPaginatedListWithSettingIdandModel(id, model, offset, limit));
 
