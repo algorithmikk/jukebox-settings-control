@@ -1,16 +1,13 @@
 package com.jukeboxapp.jukebox.domain.service;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -62,6 +59,12 @@ public class JukeBoxServiceImpl implements JukeBoxeService {
 
 		List<JukeBox> jukeBoxList = new ArrayList<>();
 
+		filterListToSet(settingId, jukeBoxList);
+
+		return jukeBoxList;
+	}
+
+	private void filterListToSet(String settingId, List<JukeBox> jukeBoxList) {
 		Set<String> setOfUniqueComponents = new TreeSet<>();
 		Set<String> setOfUniqueSettings = new TreeSet<>();
 
@@ -82,8 +85,6 @@ public class JukeBoxServiceImpl implements JukeBoxeService {
 			}
 
 		}
-
-		return jukeBoxList;
 	}
 
 	private List<String> getListOfRequiresFromSettingId(String settingId) {
@@ -103,11 +104,13 @@ public class JukeBoxServiceImpl implements JukeBoxeService {
 	}
 
 	@Override
-	public List<JukeBox> getPaginatedListWithSettingIdandModel(String settingId, String model, int offset, int limit) {
+	public List<JukeBox> getPaginatedListWithSettingIdandModel(String settingId, Optional<String> model, int offset,
+			int limit) {
 
-		return !StringUtils.isBlank(model) ? getListComponentsFromJukeGivenSettingId(settingId).stream()
+		return model.isPresent() ? getListComponentsFromJukeGivenSettingId(settingId).stream()
 				.filter(j -> j.getModel().equals(model)).collect(Collectors.toList())
 				: getListComponentsFromJukeGivenSettingId(settingId);
+
 	}
 
 }

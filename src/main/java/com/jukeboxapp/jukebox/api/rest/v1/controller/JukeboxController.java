@@ -1,6 +1,7 @@
 package com.jukeboxapp.jukebox.api.rest.v1.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -30,14 +31,15 @@ public class JukeboxController {
 			@ApiResponse(code = 200, message = "The execution has been successfull", response = JukeBox.class),
 			@ApiResponse(code = 400, message = "Bad request"),
 			@ApiResponse(code = 404, message = "The Setting for that jukebox has not been found") })
-	@GetMapping(value = "/jukebox/{model}/setting/{id}", produces = { "application/json" })
+	@GetMapping(value = { "/jukebox/setting/{id}", "/jukebox/{model}/setting/{id}" }, produces = { "application/json" })
 	public ResponseEntity<List<JukeBox>> getSettingJukeBox(
 			@PathVariable(value = "id") @ApiParam(value = "The ID of the Setting", required = true) final String id,
-			@PathVariable(value = "model") @ApiParam(value = "The model of the Jukebox", required = false) final String model,
+			@PathVariable(value = "model") @ApiParam(value = "The model of the Jukebox", required = false) final Optional<String> model,
 			@RequestParam(value = "offset") @ApiParam(value = "Offset for paginated results", required = false) final int offset,
 			@RequestParam(value = "limit") @ApiParam(value = "Limit for paginated results", required = false) final int limit) {
 
 		return ResponseEntity.ok().body(service.getPaginatedListWithSettingIdandModel(id, model, offset, limit));
+
 	}
 
 }
