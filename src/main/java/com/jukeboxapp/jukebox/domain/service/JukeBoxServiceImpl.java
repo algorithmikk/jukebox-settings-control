@@ -104,6 +104,14 @@ public class JukeBoxServiceImpl implements JukeBoxeService {
 	public List<JukeBox> getPaginatedListWithSettingIdandModel(String settingId, Optional<String> model, int offset,
 			int limit) {
 
+		PagedListHolder<JukeBox> page = createPaginatedListOfJukeBox(settingId, model, offset, limit);
+
+		return page.getPageList();
+
+	}
+
+	private PagedListHolder<JukeBox> createPaginatedListOfJukeBox(String settingId, Optional<String> model, int offset,
+			int limit) {
 		PagedListHolder<JukeBox> page = new PagedListHolder<>();
 
 		if (model.isPresent()) {
@@ -118,15 +126,7 @@ public class JukeBoxServiceImpl implements JukeBoxeService {
 
 		page.setPageSize(limit); // number of items per page
 		page.setPage(offset);
-
-		return page.getPageList();
-
-		/*
-		 * return model.isPresent() ? page.getPageList().stream().filter(j ->
-		 * j.getModel().equals(model)).collect(Collectors.toList()) :
-		 * getListComponentsFromJukeGivenSettingId(settingId);
-		 */
-
+		return page;
 	}
 
 }
