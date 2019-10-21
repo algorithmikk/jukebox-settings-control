@@ -58,3 +58,4 @@ out/
 .metadata/version.ini
 
 .generatedsources/
+.generatedsources/src/main/java/com/jukeboxapp/jukebox/domain/mapper/
