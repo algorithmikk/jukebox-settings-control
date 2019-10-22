@@ -34,7 +34,7 @@ public class JukeboxController {
 			@ApiResponse(code = 404, message = "Internal server error") })
 	@GetMapping(value = { "/jukebox/setting/{id}", "/jukebox/{model}/setting/{id}" }, produces = { "application/json" })
 	public ResponseEntity<List<JukeBox>> getSettingJukeBox(
-			@PathVariable(value = "id") @ApiParam(value = "The ID of the Setting", required = true) final String id,
+			@PathVariable(value = "id") @ApiParam(value = "The ID of the Setting", required = true) final Optional<String> id,
 			@PathVariable(value = "model") @ApiParam(value = "The model of the Jukebox", required = false) final Optional<String> model,
 			@RequestParam(value = "offset") @ApiParam(value = "Offset for paginated results", required = false) final Optional<Integer> offset,
 			@RequestParam(value = "limit") @ApiParam(value = "Limit for paginated results", required = false) final Optional<Integer> limit) {
