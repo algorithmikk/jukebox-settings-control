@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import com.jukeboxapp.jukebox.domain.exception.JukeBoxNotFoundException;
 import com.jukeboxapp.jukebox.domain.exception.SettingNotFoundException;
 
+import feign.FeignException;
+
 @RestControllerAdvice
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class GlobalControllerExceptionHandler {
@@ -20,6 +22,15 @@ public class GlobalControllerExceptionHandler {
 	public final ResponseEntity<JukeBoxApiError> handleRessourceNotFoundException(final RuntimeException ex) {
 
 		final JukeBoxApiError apiError = new JukeBoxApiError(HttpStatus.NOT_FOUND, LocalDateTime.now(),
+				ex.getMessage());
+
+		return ResponseEntity.ok(apiError);
+	}
+
+	@ExceptionHandler({ FeignException.class })
+	public final ResponseEntity<JukeBoxApiError> handleInternalServerError(final RuntimeException ex) {
+
+		final JukeBoxApiError apiError = new JukeBoxApiError(HttpStatus.INTERNAL_SERVER_ERROR, LocalDateTime.now(),
 				ex.getMessage());
 
 		return ResponseEntity.ok(apiError);
