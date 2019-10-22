@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.jukeboxapp.jukebox.domain.dto.JukeBoxDto;
 import com.jukeboxapp.jukebox.domain.dto.SettingsDto;
-import com.jukeboxapp.jukebox.springconfig.JacksonConfig;
 
 @FeignClient(name = "jukeboxsetting", url = "http://my-json-server.typicode.com/touchtunes/tech-assignment")
 @Primary

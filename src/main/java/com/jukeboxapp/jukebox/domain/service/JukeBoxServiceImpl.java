@@ -10,7 +10,6 @@ import java.util.stream.Collectors;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.support.PagedListHolder;
-import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.jukeboxapp.jukebox.api.rest.v1.ressource.Components;
@@ -19,7 +18,6 @@ import com.jukeboxapp.jukebox.api.rest.v1.ressource.Requires;
 import com.jukeboxapp.jukebox.api.rest.v1.ressource.Settings;
 import com.jukeboxapp.jukebox.domain.client.JukeBoxClient;
 import com.jukeboxapp.jukebox.domain.dto.JukeBoxDto;
-import com.jukeboxapp.jukebox.domain.dto.SettingsDto;
 import com.jukeboxapp.jukebox.domain.mapper.JukeBoxMapper;
 
 @Service
