@@ -59,7 +59,7 @@ public class JukeBoxServiceImpl implements JukeBoxeService {
 	}
 
 	private List<JukeBox> filterListToSet(String settingId) {
-        //add comment
+		// add comment
 		List<JukeBox> jukeBoxList = new ArrayList<>();
 		Set<String> setOfUniqueComponents = new TreeSet<>();
 		Set<String> setOfUniqueSettings = new TreeSet<>();
@@ -120,8 +120,12 @@ public class JukeBoxServiceImpl implements JukeBoxeService {
 			page = new PagedListHolder<JukeBox>(getListComponentsFromJukesGivenSettingId(settingId));
 		}
 
-		page.setPageSize(limit.get()); // number of items per page
-		page.setPage(offset.get());
+		if (limit.isPresent()) {
+			page.setPageSize(limit.get());
+		} // number of items per page
+		if (offset.isPresent()) {
+			page.setPage(offset.get());
+		}
 		return page;
 	}
 
