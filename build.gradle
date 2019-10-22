@@ -32,6 +32,10 @@ dependencies {
 
 // https://mvnrepository.com/artifact/org.sonarsource.scanner.maven/sonar-maven-plugin
 	compile group: 'org.sonarsource.scanner.maven', name: 'sonar-maven-plugin', version: '3.7.0.1746'
+	
+	// https://mvnrepository.com/artifact/org.ehcache/ehcache
+	compile group: 'org.ehcache', name: 'ehcache', version: '3.8.1'
+	
 
 
 	implementation 'org.springframework.boot:spring-boot-starter-web'
