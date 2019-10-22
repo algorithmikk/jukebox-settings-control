@@ -31,7 +31,7 @@ public class JukeBoxServiceImpl implements JukeBoxeService {
 
 	@Override
 	public List<JukeBox> getListOfJukes(Optional<String> model) {
-		// TODO Auto-generated method stub
+		
 
 		List<JukeBox> listJukes = new ArrayList<>();
 

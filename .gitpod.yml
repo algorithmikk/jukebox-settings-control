@@ -9,3 +9,7 @@ ports:
 tasks:
 - init: echo 'init script' # runs during prebuild
   command: echo 'start script'
+vscode:
+  extensions:
+    - GabrielBB.vscode-lombok@0.9.9:crmJ0s9mO0sdhxHl4cZaMw==
+    - vscjava.vscode-java-pack@0.8.0:e/rgc3uUFWKcrT0VEIg1wQ==
