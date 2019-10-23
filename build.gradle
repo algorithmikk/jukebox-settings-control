@@ -5,8 +5,13 @@ plugins {
 	id "org.hidetake.swagger.generator" version "2.18.1"
 	id "org.sonarqube" version "2.7"
 	id 'jacoco'
+	
+	id 'com.google.cloud.tools.jib' version '1.7.0'
 }
 
+
+/** CHANGE THIS TO THE IMAGE YOU WANT TO PUSH TO */
+	jib.to.image = 'algoritmyk/jukebox-control-settings'
 
 
 apply plugin: "org.hidetake.swagger.generator"
