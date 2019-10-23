@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package com.jukeboxapp.jukebox.domain.service;
 
 import java.util.ArrayList;
@@ -30,6 +33,15 @@ public class JukeBoxServiceImpl implements JukeBoxService {
 	@Autowired
 	private JukeBoxMapper mapper;
 
+	/**
+	 * Gets the paginated list with setting id and model.
+	 *
+	 * @param settingId the setting id
+	 * @param model     the model
+	 * @param offset    the offset
+	 * @param limit     the limit
+	 * @return the paginated list with setting idand model
+	 */
 	@Override
 	public List<JukeBox> getPaginatedListWithSettingIdandModel(Optional<String> settingId, Optional<String> model,
 			Optional<Integer> offset, Optional<Integer> limit) {
@@ -38,6 +50,11 @@ public class JukeBoxServiceImpl implements JukeBoxService {
 
 	}
 
+	/**
+	 * Retrieve list of jukes from juke box client.
+	 *
+	 * @return the list
+	 */
 	@Override
 	public List<JukeBox> retrieveListOfJukesFromJukeBoxClient() {
 
@@ -58,6 +75,12 @@ public class JukeBoxServiceImpl implements JukeBoxService {
 
 	}
 
+	/**
+	 * Retrieve list of jukes from juke box client given model.
+	 *
+	 * @param model the model
+	 * @return the list
+	 */
 	@Override
 	public List<JukeBox> retrieveListOfJukesFromJukeBoxClientGivenModel(Optional<String> model) {
 
@@ -76,6 +99,11 @@ public class JukeBoxServiceImpl implements JukeBoxService {
 		return listJukes.stream().filter(j -> j.getModel().equals(model.get())).collect(Collectors.toList());
 	}
 
+	/**
+	 * Retrieve settings from juke box client.
+	 *
+	 * @return the settings
+	 */
 	@Override
 	public Settings retrieveSettingsFromJukeBoxClient() {
 
@@ -89,6 +117,13 @@ public class JukeBoxServiceImpl implements JukeBoxService {
 		return settings;
 	}
 
+	/**
+	 * Gets the list components from jukes given setting id and model.
+	 *
+	 * @param settingId the setting id
+	 * @param model     the model
+	 * @return the list components from jukes given setting id and model
+	 */
 	@Override
 	public List<JukeBox> getListComponentsFromJukesGivenSettingIdAndModel(Optional<String> settingId,
 			Optional<String> model) {
@@ -96,12 +131,24 @@ public class JukeBoxServiceImpl implements JukeBoxService {
 		return listOfJukeRequireSettingWithModel(settingId, model);
 	}
 
+	/**
+	 * Gets the list components from jukes given setting id.
+	 *
+	 * @param settingId the setting id
+	 * @return the list components from jukes given setting id
+	 */
 	@Override
 	public List<JukeBox> getListComponentsFromJukesGivenSettingId(Optional<String> settingId) {
-		// TODO Auto-generated method stub
 		return listOfJukesWithRequiredSettings(settingId);
 	}
 
+	/**
+	 * List of juke require setting with model.
+	 *
+	 * @param settingId the setting id
+	 * @param model the model
+	 * @return the list
+	 */
 	private List<JukeBox> listOfJukeRequireSettingWithModel(Optional<String> settingId, Optional<String> model) {
 
 		List<JukeBox> jukeBoxList = new ArrayList<>();
@@ -119,8 +166,14 @@ public class JukeBoxServiceImpl implements JukeBoxService {
 
 	}
 
+	/**
+	 * List of jukes with required settings.
+	 *
+	 * @param settingId the setting id
+	 * @return the list
+	 */
 	private List<JukeBox> listOfJukesWithRequiredSettings(Optional<String> settingId) {
-		// add comment
+
 		List<JukeBox> jukeBoxList = new ArrayList<>();
 
 		for (JukeBox juke : retrieveListOfJukesFromJukeBoxClient()) {
@@ -135,6 +188,12 @@ public class JukeBoxServiceImpl implements JukeBoxService {
 		return jukeBoxList;
 	}
 
+	/**
+	 * Populate set of unique components from list names of jukes.
+	 *
+	 * @param juke the juke
+	 * @return the sets the
+	 */
 	private Set<String> populateSetOfUniqueComponentsFromListNamesOfJukes(JukeBox juke) {
 
 		return juke.getComponents().stream().map(Components::getName).collect(Collectors.toList()).stream()
@@ -142,11 +201,23 @@ public class JukeBoxServiceImpl implements JukeBoxService {
 
 	}
 
+	/**
+	 * Populate set of unique settings from list requires of settings.
+	 *
+	 * @param settingId the setting id
+	 * @return the sets the
+	 */
 	private Set<String> populateSetOfUniqueSettingsFromListRequiresOfSettings(Optional<String> settingId) {
 
 		return getListOfRequiresFromSettingId(settingId).stream().collect(Collectors.toSet());
 	}
 
+	/**
+	 * Gets the list of requires from setting id.
+	 *
+	 * @param settingId the setting id
+	 * @return the list of requires from setting id
+	 */
 	private List<String> getListOfRequiresFromSettingId(Optional<String> settingId) {
 
 		List<String> requires = new ArrayList<>();
@@ -170,6 +241,12 @@ public class JukeBoxServiceImpl implements JukeBoxService {
 
 	}
 
+	/**
+	 * Check if setting id exist.
+	 *
+	 * @param settingId the setting id
+	 * @return true, if successful
+	 */
 	private boolean checkIfSettingIdExist(Optional<String> settingId) {
 		if (!retrieveSettingsFromJukeBoxClient().getSettings().stream().map(f -> f.getId()).collect(Collectors.toList())
 				.contains(settingId.get())) {
@@ -179,6 +256,15 @@ public class JukeBoxServiceImpl implements JukeBoxService {
 		return true;
 	}
 
+	/**
+	 * Creates the paginated list of jukes.
+	 *
+	 * @param settingId the setting id
+	 * @param model the model
+	 * @param offset the offset
+	 * @param limit the limit
+	 * @return the paged list holder
+	 */
 	public PagedListHolder<JukeBox> createPaginatedListOfJukes(Optional<String> settingId, Optional<String> model,
 			Optional<Integer> offset, Optional<Integer> limit) {
 		PagedListHolder<JukeBox> page = new PagedListHolder<>();
