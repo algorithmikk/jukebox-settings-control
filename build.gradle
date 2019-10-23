@@ -7,6 +7,7 @@ plugins {
 	id 'jacoco'
 	
 	id 'com.google.cloud.tools.jib' version '1.7.0'
+	id "com.palantir.docker" version "0.22.1"
 }
 
 
@@ -16,9 +17,11 @@ plugins {
 
 apply plugin: "org.hidetake.swagger.generator"
 apply plugin: "jacoco"
+apply plugin: 'com.palantir.docker'
 
 group = 'com.jukeboxapp'
 version = '0.0.1-SNAPSHOT'
+
 sourceCompatibility = 8
 targetCompatibility = 8
 
@@ -123,6 +126,8 @@ dependencies {
 
 	testImplementation('org.junit.jupiter:junit-jupiter:5.5.2')
 	
+	
+	
 
 	
 }
@@ -176,6 +181,17 @@ compileJava.dependsOn swaggerSources.jukeboxsettingprofilev1.code
 
 sourceSets{
 	main.java.srcDirs +=["${swaggerSources.jukeboxsettingprofilev1.code.outputDir}/src/main/java"]
+}
+
+task unpack(type: Copy) {
+    dependsOn bootJar
+    from(zipTree(tasks.bootJar.outputs.files.singleFile))
+    into("build/dependency")
+}
+docker {
+    name "algoritmyk/${bootJar.baseName}"
+    copySpec.from(tasks.unpack.outputs).into("dependency")
+    buildArgs(['DEPENDENCY': "dependency"])
 }
 
 
