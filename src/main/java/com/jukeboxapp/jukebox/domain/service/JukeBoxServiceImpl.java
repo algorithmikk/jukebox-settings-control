@@ -9,9 +9,7 @@ import java.util.stream.Collectors;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.support.PagedListHolder;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import com.jukeboxapp.jukebox.api.rest.v1.ressource.Components;
 import com.jukeboxapp.jukebox.api.rest.v1.ressource.JukeBox;
@@ -20,7 +18,6 @@ import com.jukeboxapp.jukebox.api.rest.v1.ressource.Settings;
 import com.jukeboxapp.jukebox.domain.client.JukeBoxClient;
 import com.jukeboxapp.jukebox.domain.dto.JukeBoxDto;
 import com.jukeboxapp.jukebox.domain.exception.DomainExceptionHandler;
-import com.jukeboxapp.jukebox.domain.exception.JukeBoxNotFoundException;
 import com.jukeboxapp.jukebox.domain.exception.SettingNotFoundException;
 import com.jukeboxapp.jukebox.domain.mapper.JukeBoxMapper;
 
@@ -34,7 +31,15 @@ public class JukeBoxServiceImpl implements JukeBoxeService {
 	private JukeBoxMapper mapper;
 
 	@Override
-	public List<JukeBox> getListOfJukes() {
+	public List<JukeBox> getPaginatedListWithSettingIdandModel(Optional<String> settingId, Optional<String> model,
+			Optional<Integer> offset, Optional<Integer> limit) {
+
+		return createPaginatedListOfJukes(settingId, model, offset, limit).getPageList();
+
+	}
+
+	@Override
+	public List<JukeBox> retrieveListOfJukesFromJukeBoxClient() {
 
 		List<JukeBox> listJukes = new ArrayList<JukeBox>();
 		try {
@@ -54,7 +59,7 @@ public class JukeBoxServiceImpl implements JukeBoxeService {
 	}
 
 	@Override
-	public List<JukeBox> getListOfJukesWithModel(Optional<String> model) {
+	public List<JukeBox> retrieveListOfJukesFromJukeBoxClientGivenModel(Optional<String> model) {
 
 		List<JukeBox> listJukes = new ArrayList<JukeBox>();
 
@@ -72,7 +77,7 @@ public class JukeBoxServiceImpl implements JukeBoxeService {
 	}
 
 	@Override
-	public Settings getAllSettings() {
+	public Settings retrieveSettingsFromJukeBoxClient() {
 
 		Settings settings = new Settings();
 
@@ -101,10 +106,10 @@ public class JukeBoxServiceImpl implements JukeBoxeService {
 
 		List<JukeBox> jukeBoxList = new ArrayList<>();
 
-		for (JukeBox juke : getListOfJukesWithModel(model)) {
+		for (JukeBox juke : retrieveListOfJukesFromJukeBoxClientGivenModel(model)) {
 
-			if (CollectionUtils.containsAll(buildTreeSetOfUniqueComponentsFromListNamesOfJukes(juke),
-					buildTreeSetOfUniqueSettingsFromListofRequireSetting(settingId))) {
+			if (CollectionUtils.containsAll(populateSetOfUniqueComponentsFromListNamesOfJukes(juke),
+					populateSetOfUniqueSettingsFromListRequiresOfSettings(settingId))) {
 				jukeBoxList.add(juke);
 			}
 
@@ -118,10 +123,10 @@ public class JukeBoxServiceImpl implements JukeBoxeService {
 		// add comment
 		List<JukeBox> jukeBoxList = new ArrayList<>();
 
-		for (JukeBox juke : getListOfJukes()) {
+		for (JukeBox juke : retrieveListOfJukesFromJukeBoxClient()) {
 
-			if (CollectionUtils.containsAll(buildTreeSetOfUniqueComponentsFromListNamesOfJukes(juke),
-					buildTreeSetOfUniqueSettingsFromListofRequireSetting(settingId))) {
+			if (CollectionUtils.containsAll(populateSetOfUniqueComponentsFromListNamesOfJukes(juke),
+					populateSetOfUniqueSettingsFromListRequiresOfSettings(settingId))) {
 				jukeBoxList.add(juke);
 			}
 
@@ -130,14 +135,14 @@ public class JukeBoxServiceImpl implements JukeBoxeService {
 		return jukeBoxList;
 	}
 
-	private Set<String> buildTreeSetOfUniqueComponentsFromListNamesOfJukes(JukeBox juke) {
+	private Set<String> populateSetOfUniqueComponentsFromListNamesOfJukes(JukeBox juke) {
 
 		return juke.getComponents().stream().map(Components::getName).collect(Collectors.toList()).stream()
 				.collect(Collectors.toSet());
 
 	}
 
-	private Set<String> buildTreeSetOfUniqueSettingsFromListofRequireSetting(Optional<String> settingId) {
+	private Set<String> populateSetOfUniqueSettingsFromListRequiresOfSettings(Optional<String> settingId) {
 
 		return getListOfRequiresFromSettingId(settingId).stream().collect(Collectors.toSet());
 	}
@@ -146,25 +151,32 @@ public class JukeBoxServiceImpl implements JukeBoxeService {
 
 		List<String> requires = new ArrayList<>();
 
-		for (Requires req : getAllSettings().getSettings()) {
+		try {
+			checkIfSettingIdExist(settingId);
 
-			if (req.getId().equals(settingId.get())) {
+			for (Requires req : retrieveSettingsFromJukeBoxClient().getSettings()) {
 
-				requires = new ArrayList<String>(req.getRequires());
+				if (req.getId().equals(settingId.get())) {
 
+					requires = new ArrayList<String>(req.getRequires());
+
+				}
 			}
+		} catch (Exception e) {
+			DomainExceptionHandler.handleException(e);
 		}
 
 		return requires;
 
 	}
 
-	@Override
-	public List<JukeBox> getPaginatedListWithSettingIdandModel(Optional<String> settingId, Optional<String> model,
-			Optional<Integer> offset, Optional<Integer> limit) {
+	private boolean checkIfSettingIdExist(Optional<String> settingId) {
+		if (!retrieveSettingsFromJukeBoxClient().getSettings().stream().map(f -> f.getId()).collect(Collectors.toList())
+				.contains(settingId.get())) {
+			throw new SettingNotFoundException();
 
-		return createPaginatedListOfJukes(settingId, model, offset, limit).getPageList();
-
+		}
+		return true;
 	}
 
 	private PagedListHolder<JukeBox> createPaginatedListOfJukes(Optional<String> settingId, Optional<String> model,
@@ -181,9 +193,11 @@ public class JukeBoxServiceImpl implements JukeBoxeService {
 		}
 
 		if (limit.isPresent()) {
+			// if no limit present default is 10.
 			page.setPageSize(limit.get());
-		} // number of items per page
+		}
 		if (offset.isPresent()) {
+			// if no offse present default starts at 0.
 			page.setPage(offset.get());
 		}
 		return page;
