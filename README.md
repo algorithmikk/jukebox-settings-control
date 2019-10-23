@@ -9,7 +9,12 @@ Just clone this repo (dev branch) and in the root directory of this project
 
 (or try to get the docker image https://hub.docker.com/r/algoritmyk/jukebox-control-settings I could not confirm why is not building locally maybe some config issues with my machine :p)
 
-So going back to the essential: if you want to build it manually just: 
+execute in your command line or terminal:
+
+docker run -p 8080:8080 -t algoritmyk/jukebox-control-settings
+and go http://localhost:8080/swagger-ui.html
+
+In case you want to build it manually just: 
 
 cd /jukebox-settings-control
 and run:
