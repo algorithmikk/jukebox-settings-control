@@ -12,8 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jukeboxapp.jukebox.api.rest.v1.ressource.JukeBox;
-import com.jukeboxapp.jukebox.domain.exception.JukeBoxNotFoundException;
-import com.jukeboxapp.jukebox.domain.service.JukeBoxeService;
+import com.jukeboxapp.jukebox.domain.service.JukeBoxService;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -25,7 +24,7 @@ import io.swagger.annotations.ApiResponses;
 public class JukeboxController {
 
 	@Autowired
-	private JukeBoxeService service;
+	private JukeBoxService service;
 
 	@ApiOperation(value = "Return a list of paginated Jukes with a supported setting Id", nickname = "getSettingJukeBox")
 	@ApiResponses(value = {

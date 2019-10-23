@@ -22,7 +22,7 @@ import com.jukeboxapp.jukebox.domain.exception.SettingNotFoundException;
 import com.jukeboxapp.jukebox.domain.mapper.JukeBoxMapper;
 
 @Service
-public class JukeBoxServiceImpl implements JukeBoxeService {
+public class JukeBoxServiceImpl implements JukeBoxService {
 
 	@Autowired
 	private JukeBoxClient client;
@@ -179,7 +179,7 @@ public class JukeBoxServiceImpl implements JukeBoxeService {
 		return true;
 	}
 
-	private PagedListHolder<JukeBox> createPaginatedListOfJukes(Optional<String> settingId, Optional<String> model,
+	public PagedListHolder<JukeBox> createPaginatedListOfJukes(Optional<String> settingId, Optional<String> model,
 			Optional<Integer> offset, Optional<Integer> limit) {
 		PagedListHolder<JukeBox> page = new PagedListHolder<>();
 
