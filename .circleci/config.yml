@@ -8,6 +8,9 @@ jobs:
     - run:
         name: Analyze on SonarCloud
         command: gradle build sonarqube -Dsonar.projectKey="algorithmikk_jukebox-settings-control" -Dsonar.organization="algorithmikk" -Dsonar.host.url="https://sonarcloud.io"
+    - store_artifacts:
+        path:  jacoco
+
 workflows:
   main:
     jobs:
