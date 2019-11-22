@@ -14,8 +14,6 @@ import com.jukeboxapp.jukebox.domain.dto.SettingsDto;
 @Primary
 public interface JukeBoxClient {
 
-	// @GetMapping(value = "/touchtunes/tech-assignment/jukes", consumes =
-	// MediaType.APPLICATION_JSON_VALUE)
 	@RequestMapping(method = RequestMethod.GET, value = "/jukes")
 	List<JukeBoxDto> getListOfJukes();
 

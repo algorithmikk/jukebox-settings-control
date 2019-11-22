@@ -31,8 +31,8 @@ public class JukeboxController {
 			@ApiResponse(code = 200, message = "The execution has been successfull", response = JukeBox.class),
 			@ApiResponse(code = 400, message = "Bad request"),
 			@ApiResponse(code = 404, message = "The Setting for that jukebox has not been found"),
-			@ApiResponse(code = 404, message = "Internal server error") })
-	@GetMapping(value = { "/jukebox/setting/{id}" }, produces = { "application/json" })
+			@ApiResponse(code = 500, message = "Internal server error") })
+	@GetMapping(value = { "/jukebox/settings/{id}" }, produces = { "application/json" })
 	public ResponseEntity<List<JukeBox>> getSettingJukeBox(
 			@PathVariable(value = "id") @ApiParam(value = "The ID of the Setting", required = true) final Optional<String> id,
 			@RequestParam(value = "model") @ApiParam(value = "The model of the Jukebox", required = false) final Optional<String> model,

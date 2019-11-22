@@ -13,3 +13,6 @@ vscode:
   extensions:
     - GabrielBB.vscode-lombok@0.9.9:crmJ0s9mO0sdhxHl4cZaMw==
     - vscjava.vscode-java-pack@0.8.0:e/rgc3uUFWKcrT0VEIg1wQ==
+    - Pivotal.vscode-spring-boot@1.12.0:jBoQhoPIn8lopj0vieWbMw==
+    - vscjava.vscode-spring-initializr@0.4.6:WOgtgIwX3Ngy4pM9ArXjCQ==
+    - vscjava.vscode-spring-boot-dashboard@0.1.6:/G6fobfzYSrYZdNU7UB78g==
