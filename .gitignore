@@ -1,3 +1,4 @@
+/bin
 HELP.md
 .gradle
 build/
@@ -31,8 +32,6 @@ out/
 ### VS Code ###
 .vscode/
 .DS_Store
-.generatedsources/com/jukeboxapp/jukebox/domain/mapper/JukeBoxMapperImpl.java
-.generatedsources/src/main/java/com/jukeboxapp/jukebox/domain/mapper/JukeBoxMapperImpl.java
 .gitattributes
 .metadata/.lock
 .metadata/.log
@@ -57,3 +56,6 @@ out/
 .metadata/.plugins/org.eclipse.ui.workbench/dialog_settings.xml
 .metadata/.plugins/org.eclipse.ui.workbench/workingsets.xml
 .metadata/version.ini
+
+.generatedsources/
+.generatedsources/src/main/java/com/jukeboxapp/jukebox/domain/mapper/
