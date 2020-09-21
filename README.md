@@ -1,11 +1,11 @@
 
 # jukebox-settings-control
  
-REST API with a single GET endpoint that returns a paginated list of jukeboxes that suppport a given setting id.
+Microservice REST API with a single GET endpoint that returns a paginated list of jukeboxes that suppport a given setting id.
 
-Hi I built this spring boot-app using Gradle, it is preferable to use the GradleWrapper to buildclean and run this Spring Boot App.
+This spring boot-app uses Gradle, it is preferable to use the GradleWrapper to buildclean and run this Spring Boot App.
 
-Just clone this repo (dev branch) and in the root directory of this project
+Just clone this repo and in the root directory of this project
 
 (or try to get the docker image https://hub.docker.com/r/algoritmyk/jukebox-control-settings I could not confirm why is not building locally maybe some config issues with my machine :p)
 
